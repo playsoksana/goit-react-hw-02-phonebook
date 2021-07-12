@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import Form from './components/Form';
 import ContactList from './components/ContactList';
-
-import './App.css';
+import Filter from './components/Filter';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import notify from './helpers/notify';
+import './index.css';
 
 class App extends Component {
   state = {
@@ -12,11 +15,18 @@ class App extends Component {
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
+    filter: '',
   };
 
   addContactOnSubmit = data => {
+    if (
+      this.state.contacts.find(({ name }) => name === data.name.toLowerCase())
+    ) {
+      notify(data.name);
+      return;
+    }
     const contact = {
-      name: data.name,
+      name: data.name.toLowerCase(),
       number: data.number,
       id: data.id,
     };
@@ -26,13 +36,41 @@ class App extends Component {
     }));
   };
 
+  filterOnRender = () => {
+    const { contacts, filter } = this.state;
+    return contacts.filter(({ name }) => name.toLowerCase().includes(filter));
+  };
+
+  onChangeInputFilter = ({ currentTarget: { value } }) => {
+    this.setState({
+      filter: value.toLowerCase(),
+    });
+  };
+
   render() {
+    const { addContactOnSubmit, onChangeInputFilter, filterOnRender } = this;
+    const { filter } = this.state;
+
     return (
       <section>
         <h1>Phonebook</h1>
-        <Form onSubmit={this.addContactOnSubmit} />
+        <Form onSubmit={addContactOnSubmit} />
 
-        <ContactList contacts={this.state.contacts} />
+        <Filter value={filter} filterContacts={onChangeInputFilter} />
+
+        <ContactList contacts={filterOnRender()} />
+
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </section>
     );
   }

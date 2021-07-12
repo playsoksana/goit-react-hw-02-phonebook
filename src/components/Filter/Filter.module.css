@@ -1,0 +1,10 @@
+.search {
+  position: relative;
+  left: 100px;
+
+  border: 1px solid rgb(38, 79, 36);
+  box-shadow: inset;
+  padding: 8px 20px;
+  outline: none;
+  border-radius: 4px;
+}
