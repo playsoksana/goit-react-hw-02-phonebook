@@ -1,31 +1,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Contact from '../Contact/Contact';
 import styles from './ContactList.module.css';
 
 class ContactList extends Component {
   state = {};
 
   render() {
-    const { deleteContactOnClick, contactsRender } = this.props;
+    const { deleteContactOnClick, contactsRender, contacts } = this.props;
 
-    return contactsRender.length ? (
-      <ul className={styles.contacts}>
-        {contactsRender.map(({ name, number, id }) => (
-          <li className={styles.item} key={id}>
-            <p className={styles.name}>{name}:</p>
-            <p className={styles.number}>{number}</p>
-            <button
-              className={styles.button}
-              onClick={() => {
-                deleteContactOnClick(id);
-              }}
-              type="button"
-            >
-              Delete contact
-            </button>
-          </li>
-        ))}
-      </ul>
+    const Content = contacts.length ? (
+      contactsRender.length ? (
+        <ul className={styles.contacts}>
+          {contactsRender.map(({ name, number, id }) => (
+            <Contact
+              key={id}
+              deleteContactOnClick={deleteContactOnClick}
+              name={name}
+              number={number}
+              id={id}
+            />
+          ))}
+        </ul>
+      ) : (
+        <p className={styles.notification}>
+          There is no such name in the database{' '}
+        </p>
+      )
     ) : (
       <>
         <p className={styles.notification}>"The phone book is empty"</p>
@@ -35,6 +36,7 @@ class ContactList extends Component {
         ></img>
       </>
     );
+    return Content;
   }
 }
 

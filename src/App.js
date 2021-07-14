@@ -83,6 +83,7 @@ class App extends Component {
           <ContactList
             contactsRender={filterOnRender()}
             deleteContactOnClick={deleteContact}
+            contacts={this.state.contacts}
           />
         </Container>
 

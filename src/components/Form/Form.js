@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from '../Button';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './Form.module.css';
 
@@ -76,9 +77,7 @@ class Form extends Component {
             Number
           </label>
         </div>
-        <button className={styles.button} type="submit">
-          Add contact
-        </button>
+        <Button />
       </form>
     );
   }
