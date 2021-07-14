@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import Form from './components/Form';
-import ContactList from './components/ContactList';
-import Filter from './components/Filter';
+import Form from './components/Form/Form';
+import Filter from './components/Filter/Filter';
+import ContactList from './components/ContactList/ContactList';
+import Container from './components/Container/Container';
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import notify from './helpers/notify';
@@ -32,7 +34,7 @@ class App extends Component {
     };
 
     this.setState(preventState => ({
-      contacts: [contact, ...this.state.contacts],
+      contacts: [contact, ...preventState.contacts],
     }));
   };
 
@@ -43,22 +45,46 @@ class App extends Component {
 
   onChangeInputFilter = ({ currentTarget: { value } }) => {
     this.setState({
-      filter: value.toLowerCase(),
+      filter: value,
     });
   };
 
+  deleteContact = idContact => {
+    this.setState(preventState => ({
+      contacts: preventState.contacts.filter(({ id }) => id !== idContact),
+    }));
+  };
+
   render() {
-    const { addContactOnSubmit, onChangeInputFilter, filterOnRender } = this;
-    const { filter } = this.state;
+    const {
+      addContactOnSubmit,
+      onChangeInputFilter,
+      filterOnRender,
+      deleteContact,
+    } = this;
+    const { filter, contacts } = this.state;
 
     return (
       <section>
         <h1>Phonebook</h1>
-        <Form onSubmit={addContactOnSubmit} />
+        <Container>
+          <Form onSubmit={addContactOnSubmit} />
+        </Container>
 
-        <Filter value={filter} filterContacts={onChangeInputFilter} />
+        {contacts.length ? (
+          <Container>
+            <Filter value={filter} filterContacts={onChangeInputFilter} />
+          </Container>
+        ) : (
+          ''
+        )}
 
-        <ContactList contacts={filterOnRender()} />
+        <Container>
+          <ContactList
+            contactsRender={filterOnRender()}
+            deleteContactOnClick={deleteContact}
+          />
+        </Container>
 
         <ToastContainer
           position="top-right"

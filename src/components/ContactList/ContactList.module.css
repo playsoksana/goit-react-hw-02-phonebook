@@ -61,3 +61,9 @@
   box-shadow: 0px 0px 8px 0px #990f0f;
   text-shadow: #fff -1px -1px 1px, #fff 1px 1px 1px;
 }
+
+.notification {
+  font-size: 50px;
+  font-weight: 900;
+  text-shadow: 4px 3px 0px #fff, 9px 8px 0px rgba(0, 0, 0, 0.15);
+}

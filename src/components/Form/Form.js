@@ -43,9 +43,6 @@ class Form extends Component {
     return (
       <form className={styles.form} onSubmit={addContactOnPhonebook}>
         <div className={styles.container}>
-          <label className="form-label" htmlFor="name">
-            Name
-          </label>
           <input
             id="name"
             className={styles.input}
@@ -58,11 +55,11 @@ class Form extends Component {
             title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
             required
           />
+          <label className={styles.label} htmlFor="name">
+            Name
+          </label>
         </div>
         <div className={styles.container}>
-          <label className="form-label" htmlFor="number">
-            Number
-          </label>
           <input
             id="number"
             className={styles.input}
@@ -75,6 +72,9 @@ class Form extends Component {
             title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
             required
           />
+          <label className={styles.label} htmlFor="number">
+            Number
+          </label>
         </div>
         <button className={styles.button} type="submit">
           Add contact
