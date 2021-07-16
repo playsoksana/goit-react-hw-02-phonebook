@@ -43,7 +43,9 @@ class App extends Component {
 
   filterOnRender = () => {
     const { contacts, filter } = this.state;
-    return contacts.filter(({ name }) => name.toLowerCase().includes(filter));
+    return contacts.filter(({ name }) =>
+      name.toLowerCase().includes(filter.toLocaleLowerCase()),
+    );
   };
 
   onChangeInputFilter = ({ currentTarget: { value } }) => {
